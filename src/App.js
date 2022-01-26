@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import logo from "../src/images/logo.jpg";
+import logo from "./images/logo.svg";
 
 function App() {
   const [data, setData] = useState({});
@@ -25,17 +25,13 @@ function App() {
   ) : (
     <div className="deliveroo">
       <div className="header">
-        <h1>Deliveroo</h1>
-        {/* <span>
-          <img src="logo.jpg" alt="" />
-        </span>{" "} */}
+        <span>
+          <img className="logo" src={logo} alt="" />
+        </span>{" "}
       </div>
       <div className="banniere">
         <span>
-          <h2>
-            {data.restaurant.path}
-            {data.restaurant.name}
-          </h2>
+          <h2>{data.restaurant.name}</h2>
 
           <p>{data.restaurant.description} </p>
         </span>
@@ -52,20 +48,21 @@ function App() {
           {data.categories.map((categorie, index) => {
             return (
               <div key={index}>
-                <h2>{categorie.name}</h2>
+                <h3>{categorie.name}</h3>
                 <ul className="meal">
                   {categorie.meals.map((meal, index) => {
                     return (
                       <li key={index}>
                         <div className="meals">
                           <div>
-                            <p> {meal.title}</p>
-                            <p>{meal.description}</p>
-                            <span>{meal.price} €</span>
+                            <p className="title"> {meal.title}</p>
+                            <p className="description">{meal.description}</p>
+                            <span className="price">{meal.price} €</span>
 
-                            <span>
-                              {meal.popular && <i class="fas fa-star"> </i>}
-                              {meal.popular && "populaire"}
+                            <span className="star">
+                              {meal.popular && <i className="fas fa-star"> </i>}
+
+                              {meal.popular && " populaire"}
                             </span>
                           </div>
                           <span>
