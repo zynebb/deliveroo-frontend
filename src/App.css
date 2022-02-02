@@ -90,3 +90,18 @@ h3 {
   color: #808484;
   size: 17px;
 }
+.main {
+  display: flex;
+}
+.cart button {
+  background-color: #bac3c3;
+  border-radius: 5%;
+  border: none;
+  color: #93a1a2;
+  font-size: 16px;
+  font-weight: bold;
+}
+.cart {
+  position: sticky;
+  top: 0;
+}

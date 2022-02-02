@@ -2,11 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import logo from "./images/logo.svg";
+import reactDom from "react-dom";
+import Category from "./Component/Category";
+// import Cart from "./Component/Cart";
 
 function App() {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
+  const [carts, setCart] = useState([]);
+  let total = 0;
+  for (let i = 0; i < carts.length; i++) {
+    total = total + Number(carts[i].price) * carts[i].quantity;
+  }
   const fetchData = async () => {
     const response = await axios.get(
       " https://deliveroo-backend-zyneb.herokuapp.com/"
@@ -43,39 +50,80 @@ function App() {
           />
         </span>
       </div>
-      <div className="body">
-        <div>
+      <div className="main">
+        <div className="body">
           {data.categories.map((categorie, index) => {
             return (
-              <div key={index}>
-                <h3>{categorie.name}</h3>
-                <ul className="meal">
-                  {categorie.meals.map((meal, index) => {
-                    return (
-                      <li key={index}>
-                        <div className="meals">
-                          <div>
-                            <p className="title"> {meal.title}</p>
-                            <p className="description">{meal.description}</p>
-                            <span className="price">{meal.price} €</span>
+              categorie.meals.length > 0 && (
+                <Category
+                  categorie={categorie}
+                  index={categorie.name}
+                  carts={carts}
+                  setCart={setCart}
+                />
+              )
+            );
+          })}
+        </div>
+        <div
+          className="cart"
+          style={{
+            borderRadius: 5,
+            backgroundColor: "white",
+            height: 190,
+            width: 350,
+            marginTop: 30,
+            marginRight: 60,
+            borderRadius: 5,
+          }}
+        >
+          <button style={{ height: 50, width: 320, margin: 10 }}>
+            valider mon panier
+          </button>
+          <div
+            style={{
+              fontWeight: "lighter",
+              color: "grey",
+              textAlign: "center",
+              marginTop: 50,
+            }}
+          >
+            {" "}
+            Votre panier est vide
+          </div>
+          {carts.map((cart, index) => {
+            return (
+              <div>
+                <button
+                  onClick={() => {
+                    let newCarts = [...carts];
+                    if (newCarts[index].quantity === 1) {
+                      newCarts.splice(index, 1);
+                    } else {
+                      newCarts[index].quantity--;
+                    }
 
-                            <span className="star">
-                              {meal.popular && <i className="fas fa-star"> </i>}
+                    setCart(newCarts);
+                  }}
+                >
+                  -
+                </button>
+                {cart.quantity}{" "}
+                <button
+                  onClick={() => {
+                    let newCarts = [...carts];
 
-                              {meal.popular && " populaire"}
-                            </span>
-                          </div>
-                          <span>
-                            {meal.picture && <img src={meal.picture} alt="" />}
-                          </span>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
+                    newCarts[index].quantity++;
+                    setCart(newCarts);
+                  }}
+                >
+                  +
+                </button>{" "}
+                {cart.title}
               </div>
             );
           })}
+          Total : {total.toFixed(2)} €
         </div>
       </div>
     </div>
