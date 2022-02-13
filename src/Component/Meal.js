@@ -1,51 +1,54 @@
 import React from "react";
+import Cart from "./Cart";
 
 const Meal = ({ meal, carts, setCart }) => {
   return (
-    <li
-      key={meal.id}
-      onClick={() => {
-        let newCarts = [...carts];
-        let isFound = false;
-        for (let i = 0; i < carts.length; i++) {
-          if (carts[i].id === meal.id) {
-            newCarts[i].quantity++;
-            isFound = true;
-            break;
+    <div>
+      <li
+        key={meal.id}
+        onClick={() => {
+          let newCarts = [...carts];
+          let isFound = false;
+          for (let i = 0; i < carts.length; i++) {
+            if (carts[i].id === meal.id) {
+              newCarts[i].quantity++;
+              isFound = true;
+              break;
+            }
           }
-        }
-        if (isFound === false) {
-          newCarts.push({
-            title: meal.title,
-            id: meal.id,
-            price: meal.price,
-            quantity: 1,
-          });
-        }
+          if (isFound === false) {
+            newCarts.push({
+              title: meal.title,
+              id: meal.id,
+              price: meal.price,
+              quantity: 1,
+            });
+          }
 
-        // console.log(newCart);
+          // console.log(newCart);
 
-        setCart(newCarts);
-      }}
-    >
-      <div className="meals">
-        <div
-          style={{
-            cursor: "pointer",
-          }}
-        >
-          <p className="title"> {meal.title}</p>
-          <p className="description">{meal.description}</p>
-          <span className="price">{meal.price} €</span>
-          <span className="star">
-            {meal.popular && <i className="fas fa-star"> </i>}
+          setCart(newCarts);
+        }}
+      >
+        <div className="meals">
+          <div
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            <p className="title"> {meal.title}</p>
+            <p className="description">{meal.description}</p>
+            <span className="price">{meal.price} €</span>
+            <span className="star">
+              {meal.popular && <i className="fas fa-star"> </i>}
 
-            {meal.popular && " populaire"}
-          </span>
+              {meal.popular && " populaire"}
+            </span>
+          </div>
+          <span>{meal.picture && <img src={meal.picture} alt="" />}</span>
         </div>
-        <span>{meal.picture && <img src={meal.picture} alt="" />}</span>
-      </div>
-    </li>
+      </li>
+    </div>
   );
 };
 export default Meal;
