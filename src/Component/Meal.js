@@ -7,6 +7,7 @@ const Meal = ({ meal, carts, setCart }) => {
       <li
         key={meal.id}
         onClick={() => {
+          console.log(meal);
           let newCarts = [...carts];
           let isFound = false;
           for (let i = 0; i < carts.length; i++) {
@@ -23,6 +24,18 @@ const Meal = ({ meal, carts, setCart }) => {
               price: meal.price,
               quantity: 1,
             });
+          } else {
+            <div
+              className="empty"
+              style={{
+                fontWeight: "lighter",
+                color: "grey",
+                textAlign: "center",
+                marginTop: 50,
+              }}
+            >
+              Votre panier est vide
+            </div>;
           }
 
           // console.log(newCart);
